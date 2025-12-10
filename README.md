@@ -50,6 +50,8 @@ The tilemap editor is a standalone tool for creating game levels.
 - **4**: Spike Down (pointing downward)
 - **5**: Spike Left (pointing left)
 - **6**: Carrot (collectible)
+- **7**: Bone (decorative platform tile)
+- **8**: Skull (decorative platform tile)
 
 ### Using the Tilemap Editor
 
@@ -69,7 +71,7 @@ dub build --config=application
 
 #### Editor Controls
 - **Q-E**: Select level (1-3)
-- **0-6**: Select tile type (shown in the right panel)
+- **0-8**: Select tile type (shown in the right panel)
 - **Left Click**: Place selected tile
 - **Right Click**: Erase tile
 - **S**: Save tilemaps to `assets/tilemaps/lostbunny_level1.json`, `assets/tilemaps/lostbunny_level2.json`, `assets/tilemaps/lostbunny_level3.json`
@@ -101,7 +103,8 @@ dub build --config=application
    - Use Spike Left (5) or Right (3) on vertical walls for "growing" effect
    - Use Spike Down (4) for ceiling spikes
 5. **Carrots**: Place carrots (6) around the level for collectibles
-6. **Bottom Border**: You can place Spike Up (2) tiles along the bottom row (row 14) to create a spike floor, or leave it open for an instant-death pit
+6. **Decorative Tiles**: Use bones (7) and skulls (8) as decorative platform tiles that add visual variety to your level
+7. **Bottom Border**: You can place Spike Up (2) tiles along the bottom row (row 14) to create a spike floor, or leave it open for an instant-death pit
 
 ### Workflow
 1. Run `./tilemap_editor`
