@@ -358,8 +358,11 @@
       <h2>DOWNLOAD & BUILD</h2>
 
       <p>
-        <strong>PREBUILT BINARY:</strong>
-        <a href="./lostbunny" target="_blank">LOSTBUNNY</a>
+        <strong>PREBUILT BINARIES:</strong>
+        <br />
+        <a href="https://github.com/Fall25BuildingGameEngines/finalproject-lost/blob/main/PSET/Engine/lostbunny" target="_blank">GAME BINARY</a>
+        <br />
+        <a href="https://github.com/Fall25BuildingGameEngines/finalproject-lost/blob/main/PSET/Engine/tilemap_editor" target="_blank">TILEMAP EDITOR BINARY</a>
         <br />
       </p>
 
@@ -373,21 +376,27 @@
 GIT CLONE HTTPS://GITHUB.COM/FALL25BUILDINGGAMEENGINES/FINALPROJECT-LOST.GIT
 CD FINALPROJECT-LOST/PSET/ENGINE
 
-# RUN TILE EDITOR
-DUB RUN --CONFIG=EDITOR
+# MAKE SURE YOU HAVE DMD, DUB, AND SDL INSTALLED
 
-# RUN GAME
-DUB RUN
+# RUN PRE-BUILT GAME BINARY
+./LOSTBUNNY
+
+# RUN PRE-BUILT TILE MAP EDITOR
+./TILEMAP_EDITOR
+
+# COMPILE AND RUN TILEMAP EDITOR FROM SCRATCH
+DUB BUILD --CONFIG=EDITOR
+./TILEMAP_EDITOR
+
+# COMPILE AND RUN GAME FROM SCRATCH
+DUB BUILD --CONFIG=APPLICATION
+./LOSTBUNNY
 </code>
       </div>
+
       <p>
-        ALTERNATIVELY, RUN THE ENGINE USING THE BINARY EXECUTABLE.
+        <strong>PLATFORM:</strong> TESTED FOR MAC
       </p>
-
-      <div class="code-block">
-        <code># INSTRUCTIONS HERE FOR RUNNING BINARY
-</code>
-      </div>
     </section>
 
     <section id="postmortem">
