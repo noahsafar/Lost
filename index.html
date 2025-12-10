@@ -5,75 +5,152 @@
   <title>LOST - Building Game Engines Final Project</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    html {
-      background-color: #e0d5ef;
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #1e1432;
+      font-family: 'Press Start 2P', cursive;
+      color: #ff96ff;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
+      max-width: 640px;
       margin: 0 auto;
       padding: 20px;
-      line-height: 1.6;
-      background-color: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
-      border-radius: 10px;
+      font-size: 8px;
+      line-height: 1.5;
     }
 
-    /* HEADER */
+    /* Background wisps */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
 
+    /* Pixel wisp elements */
+    .wisp {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background-color: rgba(100, 80, 150, 0.4);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Header */
     header {
-      border-bottom: 1px solid #ccc;
-      background-color: #eee;
-      margin-bottom: 20px;
-      padding: 15px 20px 10px;
-      border-radius: 10px;
       text-align: center;
+      margin-bottom: 40px;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
+    .game-title {
+      font-size: 24px;
+      color: #c896ff;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 0px #4a3d8a;
+      letter-spacing: 2px;
     }
 
-    header p {
-      margin: 5px 0 10px;
-      font-size: 0.95rem;
-    }
-
-    nav {
-      margin-top: 5px;
-    }
-
-    nav a {
-      margin: 0 6px;
-      text-decoration: none;
-      color: #0077cc;
-      font-size: 0.9rem;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    /* SECTIONS */
-
-    section {
+    .game-subtitle {
+      font-size: 12px;
+      color: #9678c8;
       margin-bottom: 30px;
     }
 
-    h2 {
-      margin-bottom: 5px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 5px;
-      font-size: 1.3rem;
+    /* Menu-style navigation */
+    nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
     }
 
+    nav a {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: #503c78;
+      border: 2px solid #9682c8;
+      color: #dcc8ff;
+      text-decoration: none;
+      font-size: 10px;
+      transition: all 0.1s;
+      position: relative;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    nav a:hover, nav a:focus, nav a.selected {
+      background-color: #ffc864;
+      color: #321e50;
+      border-color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    nav a::before, nav a::after {
+      content: '>>';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ffc864;
+      font-size: 10px;
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+
+    nav a::before {
+      left: -25px;
+    }
+
+    nav a::after {
+      right: -25px;
+      content: '<<';
+    }
+
+    nav a:hover::before, nav a:hover::after, nav a.selected::before, nav a.selected::after {
+      opacity: 1;
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 40px;
+      padding: 20px;
+      border: 2px solid #503c78;
+      background-color: rgba(30, 20, 50, 0.8);
+    }
+
+    h2 {
+      font-size: 14px;
+      color: #c896ff;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #503c78;
+    }
+
+    p {
+      font-size: 10px;
+      line-height: 1.8;
+      color: #dcc8ff;
+      margin-bottom: 15px;
+    }
+
+    /* Video and screenshots */
     .video-wrapper {
       position: relative;
-      padding-bottom: 56.25%; /* 16:9 */
+      padding-bottom: 56.25%;
       height: 0;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      border: 2px solid #503c78;
     }
 
     .video-wrapper iframe {
@@ -83,67 +160,154 @@
       border: 0;
     }
 
+    .screenshots {
+      display: grid;
+      gap: 20px;
+    }
+
+    .screenshots > div {
+      border: 2px solid #503c78;
+      background-color: #1e1432;
+      overflow: hidden;
+    }
+
     .screenshots img {
-      max-width: 100%;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
+      width: 100%;
+      height: auto;
       display: block;
+      image-rendering: pixelated;
     }
 
     .screenshot-caption {
-      font-size: 0.85rem;
-      color: #555;
-      margin-bottom: 15px;
-    }
-
-    .code-block {
-      background-color: #f5f5f5;
-      border: 1px solid #ddd;
       padding: 10px;
-      font-family: Consolas, "Courier New", monospace;
-      font-size: 0.9rem;
-      overflow-x: auto;
+      font-size: 8px;
+      color: #9678c8;
+      text-align: center;
+      background-color: #1e1432;
     }
 
+    /* Code blocks */
+    .code-block {
+      background-color: #2d1b69;
+      border: 2px solid #503c78;
+      padding: 15px;
+      font-size: 8px;
+      overflow-x: auto;
+      color: #ff96ff;
+    }
+
+    .code-block code {
+      white-space: pre-wrap;
+    }
+
+    /* Links */
+    a {
+      color: #ffc864;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    /* Footer */
     footer {
-      border-top: 1px solid #ccc;
-      margin-top: 30px;
-      padding-top: 10px;
-      font-size: 0.8rem;
-      color: #555;
+      border-top: 2px solid #503c78;
+      margin-top: 40px;
+      padding-top: 20px;
+      font-size: 8px;
+      color: #9678c8;
       text-align: center;
     }
 
     /* Postmortem styling */
-
     #postmortem p {
-      background-color: #eee;
-      border-radius: 10px;
+      background-color: #2d1b69;
+      border-left: 4px solid #ffc864;
       padding: 15px;
+    }
+
+    /* Bunny icon */
+    .bunny-icon {
+      width: 60px;
+      height: 80px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .bunny-icon::before {
+      content: '';
+      position: absolute;
+      background-color: #ffffff;
+      box-shadow: 0 0 20px rgba(150, 200, 255, 0.4);
+    }
+
+    /* Instructions */
+    .instructions {
+      margin-top: 30px;
+      font-size: 8px;
+      color: #9682c8;
+      text-align: center;
+      line-height: 2;
+    }
+
+    /* Responsive */
+    @media (max-width: 680px) {
+      body {
+        padding: 10px;
+      }
+
+      .game-title {
+        font-size: 18px;
+      }
+
+      .game-subtitle {
+        font-size: 9px;
+      }
+
+      nav a {
+        font-size: 8px;
+        padding: 10px 15px;
+        min-width: 180px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Lost Bunny</h1>
-    <p>Final project for CPSC 4791/5791: Building Game Engines</p>
+  <!-- Animated background wisps -->
+  <div class="wisp" style="top: 50px; left: 50px;"></div>
+  <div class="wisp" style="top: 80px; left: 170px;"></div>
+  <div class="wisp" style="top: 110px; left: 290px;"></div>
+  <div class="wisp" style="top: 140px; left: 410px;"></div>
+  <div class="wisp" style="top: 170px; left: 530px;"></div>
 
-    <!-- basic links to go up and down the page -->
+  <header>
+    <h1 class="game-title">LOST BUNNY</h1>
+    <p class="game-subtitle">JOURNEY HOME</p>
+    <div class="bunny-icon"></div>
+
+    <!-- Menu-style navigation -->
     <nav>
-      <a href="#trailer">Trailer</a>
-      <a href="#docs">Documentation</a>
-      <a href="#architecture">Engine Architecture</a>
-      <a href="#build">Download & Build</a>
-      <a href="#postmortem">Postmortem</a>
+      <a href="#trailer">TRAILER</a>
+      <a href="#docs">DOCUMENTATION</a>
+      <a href="#architecture">ENGINE ARCHITECTURE</a>
+      <a href="#build">DOWNLOAD & BUILD</a>
+      <a href="#postmortem">POSTMORTEM</a>
     </nav>
+
+    <div class="instructions">
+      <p>↑↓ TO SELECT</p>
+      <p>ENTER TO CONFIRM</p>
+    </div>
   </header>
 
   <main>
-    <!-- Task 4.1: Trailer first, then screenshots -->
+    <!-- Trailer first, then screenshots -->
     <section id="trailer">
-      <h2>Trailer & Screenshots</h2>
+      <h2>TRAILER & SCREENSHOTS</h2>
       <p>
-        The Lost Bunny Game & Engine allows for customized levels and challenges in your bunny's quest to go home! In this game, your beloved bunny has been hit by a car and is now stranded in the Spirit Realm. Your bunny must now traverse this strange world, searching for its body to get back to the Land of the Living! Level layouts can be cleared and redesigned to allow for creative new levels and different playstyles. 
+        THE LOST BUNNY GAME & ENGINE ALLOWS FOR CUSTOMIZED LEVELS AND CHALLENGES IN YOUR BUNNY'S QUEST TO GO HOME! IN THIS GAME, YOUR BELOVED BUNNY HAS BEEN HIT BY A CAR AND IS NOW STRANDED IN THE SPIRIT REALM. YOUR BUNNY MUST NOW TRAVERSE THIS STRANGE WORLD, SEARCHING FOR ITS BODY TO GET BACK TO THE LAND OF THE LIVING! LEVEL LAYOUTS CAN BE CLEARED AND REDESIGNED TO ALLOW FOR CREATIVE NEW LEVELS AND DIFFERENT PLAYSTYLES.
       </p>
 
       <div class="video-wrapper">
@@ -153,114 +317,166 @@
       <div class="screenshots">
         <div>
           <img src="./menu.png" alt="Menu screenshot" />
-          <div class="screenshot-caption">Main menu screen</div>
+          <div class="screenshot-caption">MAIN MENU SCREEN</div>
         </div>
         <div>
           <img src="gameplay2.png" alt="Gameplay screenshot 1" />
-          <div class="screenshot-caption">Gameplay within a level</div>
+          <div class="screenshot-caption">GAMEPLAY WITHIN A LEVEL</div>
         </div>
         <div>
           <img src="./editor.png" alt="Editor / tools screenshot" />
-          <div class="screenshot-caption">Editing the level layouts</div>
+          <div class="screenshot-caption">EDITING THE LEVEL LAYOUTS</div>
         </div>
       </div>
     </section>
 
     <section id="docs">
-      <h2>Documentation</h2>
+      <h2>DOCUMENTATION</h2>
       <p>
-        Find the documentation for the engine here!
+        FIND THE DOCUMENTATION FOR THE ENGINE HERE!
       </p>
 
       <p>
-        <a href="../Engine/readme.md" target="_blank">Download full documentation</a>
+        <a href="https://noahsafar.github.io/Lost/docs/" target="_blank">DOWNLOAD FULL DOCUMENTATION</a>
       </p>
     </section>
 
     <section id="architecture">
-      <h2>Engine Architecture</h2>
+      <h2>ENGINE ARCHITECTURE</h2>
       <p>
-        The diagram below is a general overview of the engine and how everything is set up!
+        THE DIAGRAM BELOW IS A GENERAL OVERVIEW OF THE ENGINE AND HOW EVERYTHING IS SET UP!
       </p>
 
       <img
         src="engineArchitecture.png"
         alt="Engine architecture diagram"
-        style="max-width:100%; border:1px solid #ccc; margin-top:10px;"
+        style="max-width:100%; border:2px solid #503c78; margin-top:10px;"
       />
     </section>
 
     <section id="build">
-      <h2>Download & Build</h2>
+      <h2>DOWNLOAD & BUILD</h2>
 
       <p>
-        <strong>Prebuilt binary:</strong>
-        <a href="./lostbunny" target="_blank">lostbunny</a>
+        <strong>PREBUILT BINARY:</strong>
+        <a href="./lostbunny" target="_blank">LOSTBUNNY</a>
         <br />
       </p>
 
-      <h3>Running the engine</h3>
+      <h3>RUNNING THE ENGINE</h3>
       <p>
-        Build from source:
+        BUILD FROM SOURCE:
       </p>
 
       <div class="code-block">
-        <code>
-# Clone the repository <br/>
-git clone https://github.com/Fall25BuildingGameEngines/finalproject-lost.git<br/>
-cd finalproject-lost/PSET/Engine<br/>
-<br/>
-# Run Tile Editor<br/>
-dub run --config=editor
-<br/>
-<br/>
-# Run Game<br/>
-dub run
-<br/>
+        <code># CLONE THE REPOSITORY
+GIT CLONE HTTPS://GITHUB.COM/FALL25BUILDINGGAMEENGINES/FINALPROJECT-LOST.GIT
+CD FINALPROJECT-LOST/PSET/ENGINE
 
-        </code>
+# RUN TILE EDITOR
+DUB RUN --CONFIG=EDITOR
+
+# RUN GAME
+DUB RUN
+</code>
       </div>
       <p>
-        Alternatively, run the engine using the binary executable.
+        ALTERNATIVELY, RUN THE ENGINE USING THE BINARY EXECUTABLE.
       </p>
 
       <div class="code-block">
-        <code>
-# INSTRUCTIONS HERE FOR RUNNING BINARY
-<br/>
-
-        </code>
+        <code># INSTRUCTIONS HERE FOR RUNNING BINARY
+</code>
       </div>
     </section>
 
     <section id="postmortem">
-      <h2>Postmortem</h2>
+      <h2>POSTMORTEM</h2>
 
       <p>
-        We were both really happy with how this project turned out! It was really exciting to see it unfold, both as an engine and as a game. Though the idea was a little morbid, we think it helped immerse the user in the story and the game.
+        WE WERE BOTH REALLY HAPPY WITH HOW THIS PROJECT TURNED OUT! IT WAS REALLY EXCITING TO SEE IT UNFOLD, BOTH AS AN ENGINE AND AS A GAME. THOUGH THE IDEA WAS A LITTLE MORBID, WE THINK IT HELPED IMMERSE THE USER IN THE STORY AND THE GAME.
       </p>
 
       <p>
-        Celeste grew up making small platforming games in Scratch, and this was her first platformer since! There being only a few minutes in-between finishing a drawing and seeing it move in-game was incredibly motivating- she loved being able to contribute her (much-improved) art.
+        CELESTE GREW UP MAKING SMALL PLATFORMING GAMES IN SCRATCH, AND THIS WAS HER FIRST PLATFORMER SINCE! THERE BEING ONLY A FEW MINUTES IN-BETWEEN FINISHING A DRAWING AND SEEING IT MOVE IN-GAME WAS INCREDIBLY MOTIVATING- SHE LOVED BEING ABLE TO CONTRIBUTE HER (MUCH-IMPROVED) ART.
       </p>
 
       <p>
-        Noah really enjoyed applying all of the concepts we learned in class to a final cumulative result. He also loves platformers, so it was awesome to create one that went beyond what we had previously made in class! It was very rewarding to see how everything came together and fun to explore in this new direction.
+        NOAH REALLY ENJOYED APPLYING ALL OF THE CONCEPTS WE LEARNED IN CLASS TO A FINAL CUMULATIVE RESULT. HE ALSO LOVES PLATFORMERS, SO IT WAS AWESOME TO CREATE ONE THAT WENT BEYOND WHAT WE HAD PREVIOUSLY MADE IN CLASS! IT WAS VERY REWARDING TO SEE HOW EVERYTHING CAME TOGETHER AND FUN TO EXPLORE IN THIS NEW DIRECTION.
       </p>
 
       <p>
-        Although we're happy with the result, there are definitely more features we would like to add. Initially, we wanted the spirits of other animals to act as NPCs, both friendly and dangerous. This was incorporated to some extent as floating enemy spirits, but with more time we would have liked to take this further. Additionally, different regions or biomes would have been really interesting. The story and environment are a big part of this engine / game, and allowing for more customization in those areas would be really interesting. 
+        ALTHOUGH WE'RE HAPPY WITH THE RESULT, THERE ARE DEFINITELY MORE FEATURES WE WOULD LIKE TO ADD. INITIALLY, WE WANTED THE SPIRITS OF OTHER ANIMALS TO ACT AS NPCS, BOTH FRIENDLY AND DANGEROUS. THIS WAS INCORPORATED TO SOME EXTENT AS FLOATING ENEMY SPIRITS, BUT WITH MORE TIME WE WOULD HAVE LIKED TO TAKE THIS FURTHER. ADDITIONALLY, DIFFERENT REGIONS OR BIOMES WOULD HAVE BEEN REALLY INTERESTING. THE STORY AND ENVIRONMENT ARE A BIG PART OF THIS ENGINE / GAME, AND ALLOWING FOR MORE CUSTOMIZATION IN THOSE AREAS WOULD BE REALLY INTERESTING.
       </p>
 
       <p>
-        As for the technical sections, we think there were a few areas where the code could have been made more generic instead of specialized for the bunny game. For example, animation and scripting is currently rendered in scene instead of being attatched to the player GameObject. It works for our purposes, but in the future we would like to incorporate more separation.
+        AS FOR THE TECHNICAL SECTIONS, WE THINK THERE WERE A FEW AREAS WHERE THE CODE COULD HAVE BEEN MADE MORE GENERIC INSTEAD OF SPECIALIZED FOR THE BUNNY GAME. FOR EXAMPLE, ANIMATION AND SCRIPTING IS CURRENTLY RENDERED IN SCENE INSTEAD OF BEING ATTATCHED TO THE PLAYER GAMEOBJECT. IT WORKS FOR OUR PURPOSES, BUT IN THE FUTURE WE WOULD LIKE TO INCORPORATE MORE SEPARATION.
       </p>
     </section>
   </main>
 
   <footer>
-    Final release of Lost Bunny for CPSC 4791/5791. This page includes the trailer,
-    documentation, engine architecture, binary, and postmortem.
+    FINAL RELEASE OF LOST BUNNY FOR CPSC 4791/5791. THIS PAGE INCLUDES THE TRAILER,
+    DOCUMENTATION, ENGINE ARCHITECTURE, BINARY, AND POSTMORTEM.
   </footer>
+
+  <script>
+    // Animate wisps
+    const wisps = document.querySelectorAll('.wisp');
+    wisps.forEach((wisp, index) => {
+      const baseTop = parseInt(wisp.style.top);
+      const amplitude = 10 + index * 5;
+      let offset = index * 30;
+
+      setInterval(() => {
+        offset += 2;
+        const y = baseTop + Math.sin(offset * 0.02) * amplitude;
+        wisp.style.transform = `translateY(${y - baseTop}px)`;
+      }, 50);
+    });
+
+    // Menu navigation
+    let selectedOption = 0;
+    const menuItems = document.querySelectorAll('nav a');
+
+    function updateSelection() {
+      menuItems.forEach((item, index) => {
+        if (index === selectedOption) {
+          item.classList.add('selected');
+        } else {
+          item.classList.remove('selected');
+        }
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+        e.preventDefault();
+        selectedOption = (selectedOption - 1 + menuItems.length) % menuItems.length;
+        updateSelection();
+        menuItems[selectedOption].focus();
+      } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+        e.preventDefault();
+        selectedOption = (selectedOption + 1) % menuItems.length;
+        updateSelection();
+        menuItems[selectedOption].focus();
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        menuItems[selectedOption].click();
+      }
+    });
+
+    // Add mouse hover handling
+    menuItems.forEach((item, index) => {
+      item.addEventListener('mouseenter', () => {
+        selectedOption = index;
+        updateSelection();
+      });
+    });
+
+    // Initialize
+    updateSelection();
+    menuItems[0].focus();
+  </script>
 </body>
 </html>
