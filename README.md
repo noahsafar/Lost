@@ -15,14 +15,14 @@ Lost Bunny is a story-driven 2D adventure game where you play as a pet bunny tha
 
 ### Building the Game
 ```bash
-cd Engine
+cd PSET/Engine
 dub build --config=application
 ./lostbunny
 ```
 
 ### Building the Tilemap Editor
 ```bash
-cd Engine/Editor
+cd PSET/Engine
 dub build --config=editor
 ./tilemap_editor
 ```
