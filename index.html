@@ -358,10 +358,10 @@
       <h2>DOWNLOAD & BUILD</h2>
 
       <p>
-        <strong>FIND PREBUILT BINARIES (LOSTBUNNY, TILEMAP_EDITOR) <a href="https://github.com/Fall25BuildingGameEngines/finalproject-lost/tree/main/PSET/Engine" target="_blank">HERE</a>:</strong>
+        <strong>FIND PREBUILT BINARIES <a href="https://github.com/Fall25BuildingGameEngines/finalproject-lost/tree/main/PSET/Engine" target="_blank">HERE</a>:</strong>
       </p>
 
-      <h3>RUNNING THE ENGINE</h3>
+      <h3>RUNNING PREBUILT EXECUTABLES</h3>
 
       <div class="code-block">
         <code># CLONE THE REPOSITORY
@@ -373,9 +373,18 @@ CD FINALPROJECT-LOST/PSET/ENGINE
 
 # RUN PRE-BUILT TILE MAP EDITOR
 ./TILEMAP_EDITOR
+</code>
+      </div>
+
+      <h3>BUILDING AND RUNNING THE ENGINE</h3>
+
+      <div class="code-block">
+        <code># MAKE SURE YOU HAVE DMD, DUB, AND SDL INSTALLED
+# CLONE THE REPOSITORY
+GIT CLONE HTTPS://GITHUB.COM/FALL25BUILDINGGAMEENGINES/FINALPROJECT-LOST.GIT
+CD FINALPROJECT-LOST/PSET/ENGINE
 
 # COMPILE AND RUN TILEMAP EDITOR FROM SCRATCH
-# MAKE SURE YOU HAVE DMD, DUB, AND SDL INSTALLED
 DUB BUILD --CONFIG=EDITOR
 ./TILEMAP_EDITOR
 
